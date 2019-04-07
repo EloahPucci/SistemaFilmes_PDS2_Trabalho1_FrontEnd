@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="artistaModule">
+
+<head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="img/iconeFilmes.ico" />
+    <title>Filmes Favoritos</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    </link>
+    <script src="js/angular.min.js"></script>
+
+</head>
+
+<body ng-controller="artistaControl">
+    <script src="js/jquery-3.1.0.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="control/artistaControl.js"></script>
+
+    <div ng-include src="'menu.html'"></div>
+
+    <br />
+    <div class="card">
+        <div class="card-header">Cadastro de Artistas</div>
+        <div class="card-body">
+            <div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation" class="active">
+                        <a class="nav-link active" href="#cadastro" aria-controls="cadastro" role="tab"
+                            data-toggle="tab">Cadastro</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="cadastro">
+                        <br>
+                        <button type="button" ng-click="novoArtista()" class="btn btn-info">Novo</button>
+                        <button type="button" ng-click="salvarArtista()" class="btn btn-success">Salvar</button>
+                        <button type="button" ng-click="excluirArtista()" class="btn btn-danger">Excluir</button>
+                        <button type="button" ng-click="pesquisarArtista()" class="btn btn-warning">Pesquisar</button>
+
+                        <form>
+                            <hr />
+                            <div class="form-row">
+                                <div class="form-group col-md-1">
+                                    <label for="inpuCodigo">Código:</label>
+                                    <input type="text" class="form-control" ng-model="artista.codigo" id="inputCodigo"
+                                        placeholder="Código" disabled>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="inputNome">Nome do artista:</label>
+                                    <input type="text" class="form-control" ng-model="artista.nome" id="inputNome"
+                                        placeholder="Nome do ator" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputSelecao">Filmes bons deste ator:</label>
+                                    <input type="text" class="form-control" ng-model="artista.selecao" id="inputSelecao"
+                                        placeholder="Filmes bons" required>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="dados">
+                        <br />
+                        <input type="text" class="form-control" ng-model="criterio"
+                            placeholder="O que você está procurando?">
+                        <br />
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome</th>
+                                    <th>Seleção de bons filmes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="artistaTabela in artistas | filter:criterio"
+                                    ng-click="seleciona(artistaTabela)">
+                                    <td>{{artistaTabela.codigo}}</td>
+                                    <td>{{artistaTabela.nome}}</td>
+                                    <td>{{artistaTabela.selecao}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span ng-show="(artistas | filter:criterio).length == 0">
+                            Infelizmente não temos o item que você está procurando!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
